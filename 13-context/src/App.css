@@ -1,0 +1,66 @@
+*{
+  margin: 0px;
+}
+body{
+  background-color: #ccc;
+}
+
+.header{
+  margin: 0px;
+
+}
+
+.header nav{
+  background-color: black;
+  height: 80px;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-right: 25px;
+  padding-left: 25px;
+  
+}
+
+.header ul{
+  flex-basis: 80%;
+  list-style: none;
+  display:flex;
+  justify-content: flex-end;
+
+}
+
+.header nav a{
+  text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  margin-left: 20px;
+  transition: 300ms;
+
+}
+
+header nav a:hover{
+  color: lightblue;
+}
+
+
+
+
+
+
+
+.content{
+  width: 70%;
+  min-height: 350px;
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid gray;
+  margin: 25px auto;
+  padding: 25px;
+}
+
+
+.loginForm input{
+  display: block;
+  margin: 15px;
+  padding: 15px;
+}

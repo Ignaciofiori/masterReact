@@ -1,0 +1,51 @@
+
+
+body{
+    background-color: antiquewhite;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+.grid-layout{
+    display: grid;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 800px;
+    padding:20px;
+    background-color: antiquewhite;
+    grid-template-areas: "header header"
+                        "menu menu"
+                        "contenido lateral"
+                        "footer footer";
+    grid-template-rows: 20% 10% auto 10%;
+    grid-template-columns: 70% auto;
+}
+
+.caja{
+    border: 2px solid black;
+    text-align: center;
+    padding: 20px;
+}
+
+ .caja1{
+    grid-area:header;
+    background-color:lightskyblue ;
+    
+}
+
+.caja2{
+    grid-area:menu ;
+    background-color:lightyellow ;
+}
+
+.caja3{
+    grid-area:contenido ;
+    background-color: lightsalmon;
+}
+.caja4{
+    grid-area:lateral ;
+    background-color: brown;
+}
+.caja5{
+    grid-area:footer ;
+    background-color: lightpink;
+}

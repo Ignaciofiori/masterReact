@@ -1,0 +1,97 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.label{
+  background-color: lightblue;
+  border-radius: 5px;
+  padding: 5px;
+  color: #444;
+  margin:15px;
+  display: block;
+  margin:15px;
+}
+
+.label-green{
+  background-color: green;
+  color: white;
+}
+
+.label-gray{
+  background-color: #ccc;
+  color: #444;
+  border-radius: 5px;
+  padding: 5px;
+  display: block;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+form input[type="text"],
+form select,
+form textarea{
+  display: block;
+  margin: 10px;
+  padding: 5px;
+  min-width: 250px;
+  max-width: 250px;
+}
+form select{
+  min-width: 263 px;
+  max-width: 263px;
+}
+
+form button,form input[type="submit"]{
+  display: block;
+  float: left;
+  margin: 10px;
+  padding: 10px;
+ cursor: pointer;
+ background-color: rgb(8, 92, 8);
+ color: white;
+ border: solid 1px white;
+ transition: all 300ms;
+}
+
+form button,form input[type="submit"]:hover{
+  background-color: #ccc;
+  color: #444;
+}
