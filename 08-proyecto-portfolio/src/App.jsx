@@ -2,7 +2,7 @@
 
 import './App.css';
 import { MisRutas } from './Router/MisRutas';
-import { Curriculum } from './components/Curriculum';
+
 
 function App() {
 

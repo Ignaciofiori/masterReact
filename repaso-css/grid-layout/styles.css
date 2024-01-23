@@ -12,12 +12,12 @@ body{
     min-height: 800px;
     padding:20px;
     background-color: antiquewhite;
-    grid-template-areas: "header header"
-                        "menu menu"
-                        "contenido lateral"
+    grid-template-areas: "nav contenido"
+                        "nav contenido"
+                        "nav lateral"
                         "footer footer";
     grid-template-rows: 20% 10% auto 10%;
-    grid-template-columns: 70% auto;
+    grid-template-columns: 20% auto;
 }
 
 .caja{
@@ -27,7 +27,7 @@ body{
 }
 
  .caja1{
-    grid-area:header;
+    grid-area:nav;
     background-color:lightskyblue ;
     
 }
