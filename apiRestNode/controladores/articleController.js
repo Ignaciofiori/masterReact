@@ -11,7 +11,6 @@ const articleController = {
     crearArticulo: async (req, res) => {
         //Recoger Datos para Guardar
         let parametros = req.body
-
         //Validar Datos
         try {
             articulosHelper.validarDatos(parametros)
@@ -27,12 +26,9 @@ const articleController = {
             const articulo = new Article(parametros);
             //Guardar Articulo
             const articuloGuardado = await articulo.save();
-            const allArticles = await Article.find().sort({ fecha: -1 })
-
-
             //Response
             return res.status(200).json({
-                status: "succes",
+                status: "success",
                 mensaje: "Se Guardo Exitosamente el articulo",
                 articulo: articuloGuardado
 
@@ -46,6 +42,7 @@ const articleController = {
     },
 
     conseguirArticles: async (req, res) => {
+
         try {
             let consulta = await Article.find().sort({ fecha: -1 })
 
@@ -53,14 +50,16 @@ const articleController = {
                 let consulta = await Article.find().sort({ fecha: -1 }).limit(3);
 
                 return res.status(200).json({
-                    status: "succes",
-                    articulos: consulta
+                    status: "success",
+                    articulos: consulta,
+                    contador: consulta.length
                 })
             }
 
             return res.status(200).json({
-                status: "succes",
-                articulos: consulta
+                status: "success",
+                articulos: consulta,
+                contador: consulta.length
             })
 
         } catch (error) {
@@ -79,7 +78,7 @@ const articleController = {
             let consulta = await Article.findById(id)
 
             return res.status(200).json({
-                status: "succes",
+                status: "success",
                 articulos: consulta
             })
 
@@ -99,7 +98,7 @@ const articleController = {
             await Article.findOneAndDelete({ _id: id })
 
             return res.status(200).json({
-                status: "succes",
+                status: "success",
                 mensaje: "Articulo Borrado Exitosamente",
                 articulo
 
@@ -135,7 +134,7 @@ const articleController = {
             let articuloEditado = await Article.findOneAndUpdate({ _id: id }, parametros, { new: true })
 
             return res.status(200).json({
-                status: "succes",
+                status: "success",
                 mensaje: "Articulo Editado Exitosamente",
                 articuloEditado
             })
@@ -152,53 +151,63 @@ const articleController = {
     },
 
     subirImagen: async (req, res) => {
-        //validamos que se este enviando un archivo
-        if (!req.file && req.files) {
-            return res.status(404).json({
-                status: "error",
-                mensaje: "Petición Invalida"
-            })
-        }
-
-
-        //nombre ARCHIVO
-        let fileName = req.file.originalname
-
-        //consigo extension del archivo
-        let fileSplit = fileName.split(".")
-        let extensionFile = fileSplit[1]
-
-        //validacion de la extension
-        if (extensionFile != "png" && extensionFile != "jpeg" && extensionFile != "gif") {
-
-            //borrar archivo invalido
-            fs.unlink(req.file.path, (error) => {
-
-                //dar respuesta
-                return res.status(400).json({
-                    status: "error",
-                    mensaje: "Extension De Archivo Invalido"
-                })
-            });
-
-        }
-
-        else {
+        if (req.file == undefined) {
+            //si no tiene filename
+            let fileName = "default.png"
             //Actualizar Articulo
             let articuloId = req.params.id
 
-            let articuloEditado = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: req.file.filename }, { new: true })
+            let articulo = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: fileName }, { new: true })
 
 
             //respuesta exitosa
             return res.status(200).json({
-                status: "succes",
-                mensaje: "Actualizacion Exitosa",
-                articuloEditado,
+                status: "success",
+                mensaje: "Imagen Subida Exitosamente",
+                articulo,
                 file: req.file,
             })
-        }
 
+        } else {
+            //nombre ARCHIVO
+            let fileName = req.file.originalname
+
+            //consigo extension del archivo
+            let fileSplit = fileName.split(".")
+            let extensionFile = fileSplit[1]
+
+
+            //validacion de la extension
+            if (extensionFile != "png" && extensionFile != "jpeg" && extensionFile != "gif") {
+
+                //borrar archivo invalido
+                fs.unlink(req.file.path, (error) => {
+
+                    //dar respuesta
+                    return res.status(400).json({
+                        status: "error",
+                        mensaje: "Extension De Archivo Invalido"
+                    })
+                });
+
+            }
+
+            else {
+                //Actualizar Articulo
+                let articuloId = req.params.id
+
+                let articuloEditado = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: req.file.filename }, { new: true })
+
+
+                //respuesta exitosa
+                return res.status(200).json({
+                    status: "success",
+                    mensaje: "Imagen Subida Exitosamente",
+                    articuloEditado,
+                    file: req.file,
+                })
+            }
+        }
     },
 
     getImagen: (req, res) => {
@@ -216,37 +225,40 @@ const articleController = {
             }
         })
     },
-    articleFinder:async(req,res)=>{
-    try{
-        //string de busqueda 
-    let busqueda = req.params.busqueda;
-    //Find o OR
-    let busquedaArticulos = await Article.find({"$or":[
-            {"titulo":{"$regex": busqueda,"$options":"i"}},
-            {"contenido":{"$regex": busqueda,"$options":"i"}}
-        ]})
-        .sort({fecha:-1})
-       
-    if(busquedaArticulos.length <= 0){
-        return res.status(404).json({
-            status: "error",
-            mensaje: "No Se Han Encontrado Articulos"
-        })
+    articleFinder: async (req, res) => {
+        try {
+            //string de busqueda 
+            let busqueda = req.params.busqueda;
+            //Find o OR
+            let busquedaArticulos = await Article.find({
+                "$or": [
+                    { "titulo": { "$regex": busqueda, "$options": "i" } },
+                    { "contenido": { "$regex": busqueda, "$options": "i" } }
+                ]
+            })
+                .sort({ fecha: -1 })
+
+            if (busquedaArticulos.length == 0) {
+                return res.status(404).json({
+                    status: "error",
+                    mensaje: "No Se Han Encontrado Articulos"
+                })
+            }
+            
+            return res.status(200).json({
+                status: "success",
+                articulos: busquedaArticulos
+            })
+
+        } catch (error) {
+
+            return res.status(404).json({
+                status: "error",
+                mensaje: "No Se Han Encontrado Articulos"
+            })
+        }
+
     }
-        return res.status(200).json({
-            status:"succes",
-            articulos: busquedaArticulos
-        })
-        
-    }catch(error){
-        
-        return res.status(404).json({
-            status: "error",
-            mensaje: "No Se Han Encontrado Articulos"
-        })
-    }
-   
-}
 }
 
 module.exports = articleController

@@ -16,7 +16,7 @@ body{
                       "content content content lateral"
                       "footer footer footer footer";
   grid-template-rows: 100px 70px auto 70px;
- 
+ grid-template-columns: 1fr 1fr 1fr 25%;
 }
 /*ESTILOS CABECERA*/
 .header{
@@ -26,11 +26,21 @@ text-align: left;
 font-style: italic;
 display: flex;
 justify-content: center;
+text-shadow: 0 0 10px #85afe0;/* Sombra para el brillo */
+transition: text-shadow 0.5s ease-in-out;/* Transición suave para el efecto */
 }
 .header h1{
   margin-left: 15px;
-  margin-top:30px
+  margin-top:30px;
+ color:black;/* Color base del texto */
+
 }
+
+/* Define el efecto de brillo cuando el mouse está sobre el elemento */
+.header:hover {
+  text-shadow: 0 0 20px #0b70e1; /* Cambia el color de la sombra para el brillo */
+}
+
 
 .logo{
   background: linear-gradient(90deg,#03238f10 10%, #0e73e4 100%);
@@ -80,12 +90,13 @@ justify-content: center;
   grid-area: content;
   background: #f6f7f9;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: initial;
 }
 
 .articulo-item{
+  display: flex;
   flex-grow: 1;
   background: white;
   box-shadow: 0px 0px 6px #ddd;
@@ -95,11 +106,35 @@ justify-content: center;
   padding-bottom: 60px;
   padding-left: 25px;
   padding-right: 25px;
+  text-align: left;
 }
+.articulo-item h3{
+  font-size: 30px;
+}
+
+.articulo-item h3 a{
+  text-decoration: none;
+  color: black;
+}
+.articulo-item h3 a:hover{
+  color: #e77b00;
+  transition: 420ms
+}
+.articulo-item .mascara{
+  width: 20%;
+  overflow: hidden;
+  margin-right: 50px;
+}
+.articulo-item .mascara img{
+  width: 100%;
+}
+
+.button,
 button,
 input[type="submit"],
 input[type="button"]{
  width:100px;
+ text-decoration: none;
   background: #0b70e1  ;
   color: white;
   border: 0;
@@ -112,6 +147,10 @@ input[type="button"]{
   font-weight: 500;
   cursor: pointer;
   transition: all 300ms;
+}
+
+.articulo-item .edit{
+  margin-right: 20px;
 }
 .articulo-item .edit{
 margin-right: 7px;
@@ -199,10 +238,10 @@ margin-right: 7px;
 
 
 
-/* FORMULARIO EDIT */
+/* FORMULARIOS*/
 
-.edit-form input[type="text"],
-.edit-form textarea{
+input[type="text"],
+ textarea{
   display: block;
   margin: 0 auto;
   margin-top: 15px;
@@ -215,7 +254,73 @@ margin-right: 7px;
   outline: 0;
   border-color: transparent;
 }
+/*Formulario Crear articulo*/
+.form-group{
+width: 50%;
+margin: 0px auto;
+}
 
+.form-group label{
+display: block;
+text-align: left;
+color: #444;
+margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group textarea{
+border: 1px solid #ddd;
+outline: 0;
+width: 100%;
+margin-top: 0px;
+margin-bottom: 15px;
+}
+
+/*No encontrado*/
 .noEncontrado{ 
   color: red;
+}
+
+
+/*JUMBO PAGINA DE INICIO*/
+
+.jumbo{
+  min-height: 300px;
+  width:85%;
+  background: white;
+  box-shadow: 0px 0px 6px #ddd;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 55px;
+  margin:25px auto;
+  margin-bottom: 50px;
+  padding-bottom: 75px;
+}
+
+
+.jumbo h2{
+  font-size: 30px;
+  color: #444;
+}
+.jumbo p{
+  display: block;
+  margin-bottom: 40px;
+  font-size: 20;
+}
+.contenido-articulo{
+  text-align: left;
+}
+
+.jumbo .mascara{
+  width: 100%;
+  overflow: hidden;
+  margin-right: 50px;
+}
+.jumbo .mascara img{
+  width: 100%;
+}
+
+.datos{
+  max-width: 700px;
 }

@@ -8,6 +8,7 @@ import { Nav } from '../components/layout/Nav'
 import { SideBar } from '../components/layout/SideBar'
 import { Footer } from '../components/layout/Footer'
 import {CrearArticulo} from "../components/pages/CrearArticulo"
+import { BusquedaArticulos } from '../components/pages/BusquedaArticulos'
 
 export const Rutas = () => {
     return (
@@ -16,14 +17,21 @@ export const Rutas = () => {
             <Header/>
             <Nav/>
             {/*CONTENIDO CENTRAL Y RUTAS*/}
-            <section id="content" className='content'></section>
-
+            <section id="content" className='content'>
             <Routes>
                 <Route path='/' element={<Inicio/>}/>
                 <Route path='/inicio' element={<Inicio/>}/>
                 <Route path='/articulos' element={<Articulos/>}/>
                 <Route path="/crear-articulo" element={<CrearArticulo/>}/>
+                <Route path="/buscar/:busqueda?" element={<BusquedaArticulos/>}/>
+                <Route path="/articulo/:id" element={<Articulo/>}/>
+                <Route path="*" element={
+                    <div className='jumbo'>
+                        <h1>Error 404</h1>
+                    </div>
+                }/>
             </Routes>
+            </section>
 
 
              {/*SIDEBAR Y FOOTER*/}
