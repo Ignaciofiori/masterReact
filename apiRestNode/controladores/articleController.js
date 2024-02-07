@@ -11,6 +11,7 @@ const articleController = {
     crearArticulo: async (req, res) => {
         //Recoger Datos para Guardar
         let parametros = req.body
+        console.log(parametros)
         //Validar Datos
         try {
             articulosHelper.validarDatos(parametros)
@@ -23,6 +24,7 @@ const articleController = {
         }
         // Crear objeto a Guardar
         try {
+           
             const articulo = new Article(parametros);
             //Guardar Articulo
             const articuloGuardado = await articulo.save();
@@ -38,6 +40,68 @@ const articleController = {
                 status: "error",
                 mensaje: "Error al Guardar los datos"
             })
+        }
+    },
+
+    subirImagen: async (req, res) => {
+        
+        if (req.file == undefined) {
+            //si no tiene filename
+            let fileName = "default.png"
+            //Actualizar Articulo
+            let articuloId = req.params.id
+
+            let articulo = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: fileName }, { new: true })
+
+
+            //respuesta exitosa
+            return res.status(200).json({
+                status: "success",
+                mensaje: "Imagen Subida Exitosamente",
+                articulo,
+                file: req.file,
+            })
+
+        } else  {
+            console.log(req.file)
+            //nombre ARCHIVO
+            let fileName = req.file.originalname
+
+            //consigo extension del archivo
+            let fileSplit = fileName.split(".")
+            let extensionFile = fileSplit[1]
+            console.log(extensionFile)
+
+            //validacion de la extension
+            if ((extensionFile != "png" && extensionFile != "jpeg"  && extensionFile != "gif" && extensionFile != "jpg") ) {
+
+                //borrar archivo invalido
+                fs.unlink(req.file.path, (error) => {
+
+                    //dar respuesta
+                    return res.status(400).json({
+                        status: "error",
+                        mensaje: "Extension De Archivo Invalido"
+                    })
+                });
+
+            }
+
+            else {
+                //Actualizar Articulo
+                let articuloId = req.params.id
+
+                let articuloEditado = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: req.file.filename }, { new: true })
+
+
+                //respuesta exitosa
+                return res.status(200).json({
+                    status: "success",
+                    mensaje: "Imagen Subida Exitosamente",
+                    articuloEditado,
+                    file: req.file,
+                })
+            }
         }
     },
 
@@ -120,7 +184,7 @@ const articleController = {
 
 
             try {
-                articulosHelper.validarDatos(parametros);
+                
             }
             catch {
 
@@ -148,66 +212,6 @@ const articleController = {
 
         }
 
-    },
-
-    subirImagen: async (req, res) => {
-        if (req.file == undefined) {
-            //si no tiene filename
-            let fileName = "default.png"
-            //Actualizar Articulo
-            let articuloId = req.params.id
-
-            let articulo = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: fileName }, { new: true })
-
-
-            //respuesta exitosa
-            return res.status(200).json({
-                status: "success",
-                mensaje: "Imagen Subida Exitosamente",
-                articulo,
-                file: req.file,
-            })
-
-        } else {
-            //nombre ARCHIVO
-            let fileName = req.file.originalname
-
-            //consigo extension del archivo
-            let fileSplit = fileName.split(".")
-            let extensionFile = fileSplit[1]
-
-
-            //validacion de la extension
-            if (extensionFile != "png" && extensionFile != "jpeg" && extensionFile != "gif") {
-
-                //borrar archivo invalido
-                fs.unlink(req.file.path, (error) => {
-
-                    //dar respuesta
-                    return res.status(400).json({
-                        status: "error",
-                        mensaje: "Extension De Archivo Invalido"
-                    })
-                });
-
-            }
-
-            else {
-                //Actualizar Articulo
-                let articuloId = req.params.id
-
-                let articuloEditado = await Article.findOneAndUpdate({ _id: articuloId }, { imagen: req.file.filename }, { new: true })
-
-
-                //respuesta exitosa
-                return res.status(200).json({
-                    status: "success",
-                    mensaje: "Imagen Subida Exitosamente",
-                    articuloEditado,
-                    file: req.file,
-                })
-            }
-        }
     },
 
     getImagen: (req, res) => {

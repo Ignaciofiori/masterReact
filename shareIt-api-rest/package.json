@@ -1,0 +1,16 @@
+{
+  "name": "shareit-api-rest",
+  "version": "1.0.0",
+  "description": "Apirest con node, mongo, express y JWT para red social",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ignacio Fiori",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.1.1",
+    "mongoose-pagination": "^1.0.0"
+  }
+}

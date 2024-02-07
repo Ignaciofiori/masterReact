@@ -9,6 +9,7 @@ import { SideBar } from '../components/layout/SideBar'
 import { Footer } from '../components/layout/Footer'
 import {CrearArticulo} from "../components/pages/CrearArticulo"
 import { BusquedaArticulos } from '../components/pages/BusquedaArticulos'
+import { EditarArticulo } from '../components/pages/EditarArticulo'
 
 export const Rutas = () => {
     return (
@@ -25,6 +26,7 @@ export const Rutas = () => {
                 <Route path="/crear-articulo" element={<CrearArticulo/>}/>
                 <Route path="/buscar/:busqueda?" element={<BusquedaArticulos/>}/>
                 <Route path="/articulo/:id" element={<Articulo/>}/>
+                <Route path="/editar/:id" element={<EditarArticulo/>}/>
                 <Route path="*" element={
                     <div className='jumbo'>
                         <h1>Error 404</h1>
